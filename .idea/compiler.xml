@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="bean" />
         <module name="common" />
+        <module name="main" />
         <module name="manager-api" />
         <module name="manager-impl" />
         <module name="potal-api" />
@@ -15,7 +16,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="main" target="1.8" />
       <module name="manager-api" target="1.8" />
       <module name="managerapi" target="1.8" />
     </bytecodeTargetLevel>
