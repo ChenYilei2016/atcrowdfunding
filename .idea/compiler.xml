@@ -7,15 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bean" />
+        <module name="common" />
+        <module name="manager-api" />
+        <module name="manager-impl" />
+        <module name="potal-api" />
+        <module name="potal-impl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="common" target="1.8" />
       <module name="main" target="1.8" />
       <module name="manager-api" target="1.8" />
-      <module name="manager-impl" target="1.8" />
-      <module name="potal-api" target="1.8" />
-      <module name="potal-impl" target="1.8" />
+      <module name="managerapi" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
