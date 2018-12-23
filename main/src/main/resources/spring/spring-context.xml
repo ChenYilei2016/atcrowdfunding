@@ -30,9 +30,9 @@
 	    <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
 	    <property name="dataSource" ref="dataSource"></property>
 	    <property name="mapperLocations">
-	        <list>
-	            <value>classpath*:mybatis/mapper-*.xml</value>
-	        </list>
+			<list>
+				<value>classpath*:mybatis/mapper-*.xml</value>
+			</list>
 	    </property>
 	</bean>
 	
@@ -56,7 +56,7 @@
 	</tx:advice>
 	
 	<aop:config>
-		<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.chenyilei.atcrowdfunding..*Service.*(..))"/>
-	</aop:config>		
+		<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.chenyilei.atcrowdfunding..*ServiceImpl.*(..))"/>
+	</aop:config>
 
 </beans>

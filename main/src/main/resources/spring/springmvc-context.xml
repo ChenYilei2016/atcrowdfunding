@@ -15,26 +15,37 @@
 
     <!-- 启用注解功能 -->
     <context:annotation-config />
-    
+    <mvc:annotation-driven />
+
     <!-- <mvc:annotation-driven /> -->
     <!-- <mvc:default-servlet-handler /> -->
     
     
     <!-- 字符串字符编码转换 -->
-    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >-->
+    <!--<util class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >-->
         <!--<property name="messageConverters">-->
             <!--<list>-->
-                <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">-->
+                <!--<util class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">-->
                     <!--<property name="supportedMediaTypes">-->
                         <!--<list>-->
                             <!--<value>application/json;charset=UTF-8</value>-->
                         <!--</list>-->
                     <!--</property>-->
-                <!--</bean>-->
+                <!--</util>-->
             <!--</list>-->
         <!--</property>-->
-    <!--</bean>-->
-    
+    <!--</util>-->
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.chenyilei.atcrowdfunding.manager.interceptor.HttpInterceptor"></bean>
+        </mvc:interceptor>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**" />-->
+            <!--<bean class="com.chenyilei.atcrowdfunding.main.interceptor.HttpInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+    </mvc:interceptors>
 
 	
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -42,16 +53,18 @@
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-    
-    <bean id="exceptionResolver"   class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
-        <property name="exceptionMappings">  
+    <!---->
+    <bean id="exceptionResolver"   class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionAttribute" value="e"></property>
+        <property name="exceptionMappings">
             <props>
                 <prop key="java.lang.Exception">error/error</prop>
-            </props>  
-        </property>  
+            </props>
+        </property>
     </bean>
 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="UTF-8">
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="UTF-8">
         <property name="maxUploadSize" value="2097152"/>
         <property name="resolveLazily" value="true"/>
     </bean>
