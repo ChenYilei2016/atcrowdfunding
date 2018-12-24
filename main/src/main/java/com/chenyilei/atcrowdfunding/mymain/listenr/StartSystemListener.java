@@ -14,7 +14,7 @@ public class StartSystemListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        servletContext.setAttribute("ctxPath",servletContext.getContextPath());
+        servletContext.setAttribute("APP_PATH",servletContext.getContextPath());
         System.out.println("监听器ok");
     }
 
