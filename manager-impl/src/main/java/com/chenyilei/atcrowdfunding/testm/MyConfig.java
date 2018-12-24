@@ -1,10 +1,7 @@
 package com.chenyilei.atcrowdfunding.testm;
 
-import com.chenyilei.atcrowdfunding.manager.controller.TestController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
-import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
 /**
  * --添加相关注释--

@@ -1,4 +1,4 @@
-package com.chenyilei.atcrowdfunding.manager.controller;
+package com.chenyilei.atcrowdfunding.mymain.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class TestController {
 
     @RequestMapping("/test")
     public String myTest(HttpServletRequest httpServletRequest){
-
+        
         return "success";
     }
 

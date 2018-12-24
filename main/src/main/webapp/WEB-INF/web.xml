@@ -26,6 +26,9 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.chenyilei.atcrowdfunding.mymain.listenr.StartSystemListener</listener-class>
+	</listener>
 
 	<!-- 字符编码过滤器 :
 		只负责解决POST请求乱码问题.

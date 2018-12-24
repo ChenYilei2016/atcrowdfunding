@@ -7,15 +7,15 @@
     <groupId>com.chenyilei</groupId>
     <artifactId>atcrowdfunding</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
         <module>bean</module>
         <module>common</module>
-        <module>main</module>
-        <module>manager-api</module>
         <module>manager-api</module>
         <module>manager-impl</module>
         <module>potal-api</module>
         <module>potal-impl</module>
+        <module>main</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

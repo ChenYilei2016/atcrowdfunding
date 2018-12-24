@@ -1,4 +1,4 @@
-package com.chenyilei.atcrowdfunding.manager.interceptor;//package com.chenyilei.atcrowdfunding.main.interceptor;
+package com.chenyilei.atcrowdfunding.manager.interceptor;//package com.chenyilei.atcrowdfunding.mymain.interceptor;
 
 
 import org.springframework.web.servlet.HandlerInterceptor;

@@ -43,7 +43,7 @@
         </mvc:interceptor>
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/**" />-->
-            <!--<bean class="com.chenyilei.atcrowdfunding.main.interceptor.HttpInterceptor"></bean>-->
+            <!--<bean class="com.chenyilei.atcrowdfunding.mymainin.interceptor.HttpInterceptor"></bean>-->
         <!--</mvc:interceptor>-->
     </mvc:interceptors>
 

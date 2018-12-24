@@ -3,14 +3,14 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/main" />
-    <file type="web" url="file://$PROJECT_DIR$/../main" />
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/manager-api/pom.xml" />
-        <option value="$PROJECT_DIR$/main/pom.xml" />
       </list>
     </option>
   </component>
