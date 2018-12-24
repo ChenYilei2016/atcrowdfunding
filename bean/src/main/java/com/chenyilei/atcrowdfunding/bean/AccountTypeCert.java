@@ -1,6 +1,7 @@
 package com.chenyilei.atcrowdfunding.bean;
 
 public class AccountTypeCert {
+
     private Integer id;
 
     private String accttype;

@@ -31,15 +31,16 @@
       	${exception.message }
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户登录</h2>
 		  <div class="form-group has-success has-feedback">
-			<input type="text" class="form-control" id="inputSuccess" name="loginacct" value="root" placeholder="请输入登录账号" autofocus>
-			<span class="glyphicon glyphicon-user form-control-feedback"></span>
+			<input type="text" class="form-control" id="floginacct" name="loginacct" value="root" placeholder="请输入登录账号" autofocus>
+			<%--字体图标--%>
+              <span class="glyphicon glyphicon-user form-control-feedback"></span>
 		  </div>
 		  <div class="form-group has-success has-feedback">
-			<input type="password" class="form-control" id="inputSuccess4" name="userpswd" value="root" placeholder="请输入登录密码" style="margin-top:10px;">
+			<input type="password" class="form-control" id="fuserpswd" name="userpswd" value="root" placeholder="请输入登录密码" style="margin-top:10px;">
 			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		  </div>
 		  <div class="form-group has-success has-feedback">
-			<select class="form-control" name="type">
+			<select id="ftype" class="form-control" name="type">
                 <option value="member">会员</option>
                 <option value="user" selected>管理</option>
             </select>
@@ -63,13 +64,40 @@
     <script src="${APP_PATH }/bootstrap/js/bootstrap.min.js"></script>
     <script>
     function dologin() {
-    	$("#loginForm").submit();
+    	// $("#loginForm").submit();
         /* var type = $(":selected").val();
         if ( type == "user" ) {
             window.location.href = "main.html";
         } else {
             window.location.href = "index.html";
         } */
+
+        $.ajax({
+            type:"POST",
+            url:"${APP_PATH}/doLogin.do",
+            data:{
+                loginacct: $("#floginacct").val().trim(),
+                userpswd : $("#fuserpswd").val().trim(),
+                type: $("#ftype").val().trim()
+            }
+            ,
+            before:function (data) {
+                //可以校验!
+                return true;
+            }
+            ,
+            success:function (data) {
+                if(data.success == true){
+                    window.location.href="${APP_PATH}/main.htm";
+
+                }else{
+                    alert('nooo');
+                }
+            },
+            error:function (data) {
+                window.location.href="http://www.baidu.com?id=1";
+            }
+        });
     }
     </script>
   </body>

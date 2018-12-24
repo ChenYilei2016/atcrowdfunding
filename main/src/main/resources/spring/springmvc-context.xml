@@ -20,21 +20,21 @@
     <!-- <mvc:annotation-driven /> -->
     <!-- <mvc:default-servlet-handler /> -->
     
-    
+
     <!-- 字符串字符编码转换 -->
-    <!--<util class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >-->
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >-->
         <!--<property name="messageConverters">-->
             <!--<list>-->
-                <!--<util class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">-->
+                <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">-->
                     <!--<property name="supportedMediaTypes">-->
                         <!--<list>-->
                             <!--<value>application/json;charset=UTF-8</value>-->
                         <!--</list>-->
                     <!--</property>-->
-                <!--</util>-->
+                <!--</bean>-->
             <!--</list>-->
         <!--</property>-->
-    <!--</util>-->
+    <!--</bean>-->
 
     <mvc:interceptors>
         <mvc:interceptor>

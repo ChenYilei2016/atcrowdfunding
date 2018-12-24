@@ -1,11 +1,13 @@
 package com.chenyilei.atcrowdfunding.mymain.controller;
 
 import com.chenyilei.atcrowdfunding.bean.User;
-import com.chenyilei.atcrowdfunding.manager.dao.UserMapper;
+import com.chenyilei.atcrowdfunding.common.h.AjaxResult;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -31,24 +33,46 @@ public class DispatherController {
     public String login(){
         return "login";
     }
-
-    @RequestMapping("/main")
-    public String main(){
+    @RequestMapping("/main.htm")
+    public String main1(){
         return "main";
     }
 
+    @RequestMapping("/logout.do")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "index";
+    }
+    //同步的登陆请求
+//    @RequestMapping("/doLogin")
+//    public String doLogin(User tuser, String type,HttpSession session){
+//        Map<String,Object> paramMap = new HashMap<String,Object>();
+//        paramMap.put("loginacct", tuser.getLoginacct());
+//        paramMap.put("userpswd", tuser.getUserpswd());
+//        paramMap.put("type", type);
+//
+//        User user = userService.queryUserlogin(paramMap);
+//
+//        session.setAttribute("user", user);
+//
+//        return "redirect:/main.htm";
+//    }
+
+    //异步登陆
     @RequestMapping("/doLogin")
-    public String doLogin(String loginacct, String userpswd, String type, HttpSession session){
+    @ResponseBody
+    public Object doLogin(User tuser, @RequestParam("type") String type, HttpSession session){
         Map<String,Object> paramMap = new HashMap<String,Object>();
-        paramMap.put("loginacct", loginacct);
-        paramMap.put("userpswd", userpswd);
+        paramMap.put("loginacct", tuser.getLoginacct());
+        paramMap.put("userpswd", tuser.getUserpswd());
         paramMap.put("type", type);
 
         User user = userService.queryUserlogin(paramMap);
-
         session.setAttribute("user", user);
 
-        return "redirect:/main.htm";
+        if(null ==user){
+            return new AjaxResult(false,"登陆失败");
+        }
+        return new AjaxResult(true,"登陆成功");
     }
-
 }
