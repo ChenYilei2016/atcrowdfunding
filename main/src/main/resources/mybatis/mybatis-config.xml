@@ -4,4 +4,7 @@
     <!-- <typeAliases>
         <typeAlias type="User" alias="user"/>
     </typeAliases> -->
+    <typeAliases>
+        <package name="com.chenyilei.atcrowdfunding.bean"/>
+    </typeAliases>
 </configuration>

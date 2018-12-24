@@ -1,11 +1,12 @@
 package com.chenyilei.atcrowdfunding.manager.dao;
 
 import com.chenyilei.atcrowdfunding.bean.User;
+import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
-public interface UserMapper {
+public interface UserMapper  {
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);

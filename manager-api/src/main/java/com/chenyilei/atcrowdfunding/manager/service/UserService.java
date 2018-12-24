@@ -1,5 +1,9 @@
 package com.chenyilei.atcrowdfunding.manager.service;
 
+import com.chenyilei.atcrowdfunding.bean.User;
+
+import java.util.Map;
+
 /**
  * --添加相关注释--
  *
@@ -8,4 +12,5 @@ package com.chenyilei.atcrowdfunding.manager.service;
  */
 public interface UserService {
 
+    User queryUserlogin(Map<String, Object> paramMap);
 }

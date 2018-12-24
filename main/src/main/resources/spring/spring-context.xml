@@ -37,8 +37,9 @@
 	</bean>
 	
 	<!-- 扫描Mapper映射配置 -->
-	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<bean id="mapperScannerConfigurer" class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- <property name="basePackage" value="com.chenyilei.atcrowdfunding.manager.dao,com.chenyilei.atcrowdfunding.potal.dao"/> -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 		<property name="basePackage" value="com.chenyilei.atcrowdfunding.*.dao"/>
 	</bean>
 
