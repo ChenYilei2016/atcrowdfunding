@@ -27,15 +27,22 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @RequestMapping("/toIndex")
+    public String toIndex(){
+        return "user/index";
+    }
 
-    //异步登陆
-    @RequestMapping("/index-1")
-    public String index(		@RequestParam(value="pageno",required=false,defaultValue="1") Integer pageno,
-                                @RequestParam(value="pagesize",required=false,defaultValue="5")  Integer pagesize,
-                                Map<String,Object> map){
-        Page<User> page = userService.queryUserList(pageno,pagesize);
-        map.put("page",page);
+    @RequestMapping("/index")
+    @ResponseBody
+    public Object index(		@RequestParam(value="pageno",required=false,defaultValue="1") Integer pageno,
+                                @RequestParam(value="pagesize",required=false,defaultValue="2")  Integer pagesize,
+                                @RequestParam(value = "queryText",required = false,defaultValue = "") String queryText){
 
-        return "user/index-1";
+        Page<User> page = userService.queryUserList(pageno,pagesize,queryText);
+
+        AjaxResult ajaxResult =new AjaxResult(true,"ok");
+        ajaxResult.setPage(page);
+
+        return ajaxResult;
     }
 }

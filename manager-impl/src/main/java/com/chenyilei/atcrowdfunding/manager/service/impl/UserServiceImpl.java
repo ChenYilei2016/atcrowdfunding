@@ -8,6 +8,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.weekend.Weekend;
 
 import java.util.List;
 import java.util.Map;
@@ -36,11 +39,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> queryUserList(Integer pageno, Integer pagesize) {
+    public Page<User> queryUserList(Integer pageno, Integer pagesize, String queryText) {
+        //分页
         PageHelper.startPage(pageno,pagesize);
-        List<User> users = userMapper.selectAll();
-        PageInfo info = new PageInfo(users);
 
+        //根据查询字段 模糊匹配
+        //如果有查询字段 加入模糊查询 "username","%"+queryText+"%" =>  concat("","","") 这样连接
+        Example example = new Example(User.class);
+        if(!StringUtils.isEmpty(queryText)){
+//            斜线本身很骚!!!!   java 第一次转义 变成  \\%  再用replace 正则表达式 \\% --> \%  ->在sql中代表 %
+            queryText = queryText.replaceAll("%","\\\\%");
+            example.createCriteria().andLike("loginacct","%"+queryText+"%").orLike("username","%"+queryText+"%");
+        }
+        List<User> users = userMapper.selectByExample(example);
+
+        PageInfo info = new PageInfo(users);
         Page<User> result = new Page<>(info);
 
         return result;

@@ -15,5 +15,5 @@ public interface UserService {
 
     User queryUserlogin(Map<String, Object> paramMap);
 
-    Page<User> queryUserList(Integer pageno, Integer pagesize);
+    Page<User> queryUserList(Integer pageno, Integer pagesize, String queryText);
 }
