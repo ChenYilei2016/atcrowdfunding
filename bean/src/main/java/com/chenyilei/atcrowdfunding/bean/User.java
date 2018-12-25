@@ -1,7 +1,9 @@
 package com.chenyilei.atcrowdfunding.bean;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "t_user")
 public class User {
     @Id
     private Integer id;

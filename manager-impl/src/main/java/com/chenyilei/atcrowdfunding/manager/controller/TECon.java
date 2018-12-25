@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -18,7 +19,8 @@ import java.util.Map;
 public class TECon {
 
     @ExceptionHandler(value = RuntimeException.class)
-    public ModelAndView ec(Exception e, Map mp){
+    public ModelAndView ec(HttpServletRequest request, Exception e, Map mp){
+
         mp.put("e",e.getMessage());
         return new ModelAndView("error/error",mp);
     }

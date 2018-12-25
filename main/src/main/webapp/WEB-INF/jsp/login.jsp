@@ -62,6 +62,7 @@
     </div>
     <script src="${APP_PATH }/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APP_PATH }/bootstrap/js/bootstrap.min.js"></script>
+    <%--<script type="text/javascript" src="${APP_PATH}/jquery/layer/layer.js"/>--%>
     <script>
     function dologin() {
     	// $("#loginForm").submit();
@@ -91,7 +92,7 @@
                     window.location.href="${APP_PATH}/main.htm";
 
                 }else{
-                    alert('nooo');
+                    // layer.msg("您的账号输入错误",{time:1500,icon:5,shift:6});
                 }
             },
             error:function (data) {

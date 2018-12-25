@@ -1,8 +1,9 @@
-package com.chenyilei.atcrowdfunding.mymain.interceptor;
+package com.chenyilei.atcrowdfunding.mymain.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,8 +21,9 @@ public class TestController {
     public String wangbadan;
 
     @RequestMapping("/test")
-    public String myTest(HttpServletRequest httpServletRequest){
-        
+    public String myTest(@RequestParam(value = "page",defaultValue ="1") int page, HttpServletRequest request){
+        System.out.println(request.getRequestURL());
+        System.out.println(request.getRequestURI());
         return "success";
     }
 

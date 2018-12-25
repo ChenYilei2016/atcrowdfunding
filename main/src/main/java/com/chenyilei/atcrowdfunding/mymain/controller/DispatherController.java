@@ -3,7 +3,11 @@ package com.chenyilei.atcrowdfunding.mymain.controller;
 import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.AjaxResult;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.log4j.helpers.ThreadLocalMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +28,8 @@ import java.util.Map;
 public class DispatherController {
     @Autowired
     private UserService userService ;
+
+    public ThreadLocal threadLocal;
 
     @RequestMapping("/index.htm")
     public String index(){

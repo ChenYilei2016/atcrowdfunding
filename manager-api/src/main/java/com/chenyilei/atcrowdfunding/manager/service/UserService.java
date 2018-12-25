@@ -1,6 +1,7 @@
 package com.chenyilei.atcrowdfunding.manager.service;
 
 import com.chenyilei.atcrowdfunding.bean.User;
+import com.chenyilei.atcrowdfunding.common.h.Page;
 
 import java.util.Map;
 
@@ -13,4 +14,6 @@ import java.util.Map;
 public interface UserService {
 
     User queryUserlogin(Map<String, Object> paramMap);
+
+    Page<User> queryUserList(Integer pageno, Integer pagesize);
 }
