@@ -236,10 +236,6 @@
             		}
             	});
             });
-
-			$("#resetBtn").click(function(){
-				$("#addForm")[0].reset();
-			});
             
         </script>
   </body>

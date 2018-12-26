@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -77,5 +78,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public int deleteUser(String id) {
+        return userMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public boolean deleteUsers(Integer[] id) {
+        return userMapper.deleteByIdList(Arrays.asList(id)) == id.length;
     }
 }

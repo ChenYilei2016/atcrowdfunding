@@ -329,56 +329,56 @@
             $("#allCheckbox").click(function(){
             	var checkedStatus = this.checked ;
             	//alert(checkedStatus);
-            	
-            	$("tbody tr td input[type='checkbox']").attr("checked",checkedStatus);
+
+            	var l = $("tbody tr td input[type='checkbox']");
+                $.each(l,function (i,n) {
+                   n.checked = checkedStatus;
+                });
 
             });
             
             
             $("#deleteBatchBtn").click(function(){
-            	
-            	var selectCheckbox = $("tbody tr td input:checked");
+                var selectList = $("tbody tr td input:checked");
+                var sendData = "ids=";
+                var sendJson= {};sendJson.ids = new Array();
+                // ?id=1,2,3,4;
+                // ?id=1&id=2
+                $.each(selectList,function (i,n) {
+                    if(i != 0){
+                        sendData+=',';
+                    }
+                    sendData+=n.id;
+                    // sendJson.ids.push(n.id);
+                });
+                //发送ajax消息 删除多个id
+                layer.confirm("确认要删除[]用户吗?",  {icon: 3, title:'提示'}, function(cindex){
+                    layer.close(cindex);
+                    $.ajax({
+                        type : "POST",
+                        dataType:"json",
+                        // contentType: 'application/json; charset=UTF-8',
+                        data : sendData
+                        ,
+                        url : "${APP_PATH}/user/doDeleteBatch.do",
+                        beforeSend : function() {
+                            return true ;
+                        },
+                        success : function(result){
+                            if(result.success){
+                                window.location.href="${APP_PATH}/user/toIndex.htm";
+                            }else{
+                                layer.msg("删除用户失败", {time:1000, icon:5, shift:6});
+                            }
+                        },
+                        error : function(){
+                            layer.msg("删除失败", {time:1000, icon:5, shift:6});
+                        }
+                    });
+                }, function(cindex){
+                    layer.close(cindex);
+                });
 
-            	if(selectCheckbox.length==0){
-            		layer.msg("至少选择一个用户进行删除!请选择用户!", {time:1000, icon:5, shift:6}); 
-    				return false ;
-    			}
-            	
-            	var idStr = "";
-            	
-            	$.each(selectCheckbox,function(i,n){
-            		//  url?id=5&id=6&id=7
-            		if(i!=0){
-            			idStr += "&";
-            		}
-            		idStr += "id="+n.id; 
-            	}); 
-            	
-            	
-            	layer.confirm("确认要删除这些用户吗?",  {icon: 3, title:'提示'}, function(cindex){
-            		layer.close(cindex);
-            		$.ajax({
-                		type : "POST",
-                		data : idStr,
-                		url : "${APP_PATH}/user/doDeleteBatch.do",
-                		beforeSend : function() {                  			
-                			return true ;
-                		},
-                		success : function(result){
-                			if(result.success){
-                				window.location.href="${APP_PATH}/user/toIndex.htm";
-                			}else{
-                				layer.msg("删除用户失败", {time:1000, icon:5, shift:6}); 
-                			}
-                		},
-                		error : function(){
-                			layer.msg("删除失败", {time:1000, icon:5, shift:6}); 
-                		}
-                	});
-    			}, function(cindex){
-    			    layer.close(cindex);
-    			});
-            	
             });
             
         </script>

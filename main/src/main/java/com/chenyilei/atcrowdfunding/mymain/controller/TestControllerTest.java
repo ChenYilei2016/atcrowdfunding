@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +33,21 @@ import java.util.List;
 public class TestControllerTest {
     @Autowired
     private UserMapper userMapper ;
+
+    @Test
+    public void ADD_USER(){
+        List list = new ArrayList();
+        for(int i = 100;i<200;i++){
+            User user = new User();
+            user.setLoginacct("user:"+i);
+            user.setUserpswd("root");
+            user.setCreatetime("2018-12-26 17:38:22");
+            user.setEmail("7777");
+            user.setUsername("user:"+i);
+            list.add(user);
+        }
+        userMapper.insertList(list);
+    }
 
     @Test
     public void queryUserList() {

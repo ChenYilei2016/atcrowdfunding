@@ -4,14 +4,14 @@ import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.AjaxResult;
 import com.chenyilei.atcrowdfunding.common.h.Page;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * --添加相关注释--
@@ -74,4 +74,62 @@ public class UserController {
         }
         return new AjaxResult(false,"更新失败");
     }
+
+    @RequestMapping("/doDelete.do")
+    @ResponseBody
+    public Object doDelete(@RequestParam("id") String id){
+        int a = userService.deleteUser(id);
+        if(1 == a){
+            return new AjaxResult(true,"删除成功");
+        }
+        return new AjaxResult(false,"删除失败");
+    }
+
+    /**
+     *  对应的表单数据
+     *  (1) "ids=1,2,3"
+     *  (2){
+     *      id:"...",
+     *      name:"..."
+     *  }
+     *
+     */
+    @RequestMapping("/doDeleteBatch.do")
+    @ResponseBody
+    public Object doDeleteBatch(@RequestParam("ids") List<Integer> ids){
+        boolean a = userService.deleteUsers(ids.toArray(new Integer[ids.size()]));
+        if(true == a){
+            return new AjaxResult(true,"删除成功");
+        }
+        return new AjaxResult(false,"删除失败");
+    }
+
+    /**
+     *  对应的一个整体json数据字符串
+     *   dataType:"json",
+*        contentType: 'application/json; charset=UTF-8',
+*        data : JSON.stringify(sendJson)
+     */
+//    static class TEMP_T{
+//        List<Integer> ids;
+//
+//        public List<Integer> getIds() {
+//            return ids;
+//        }
+//
+//        public void setIds(List<Integer> ids) {
+//            this.ids = ids;
+//        }
+//    }
+//    @RequestMapping("/doDeleteBatch.do")
+//    @ResponseBody
+//    public Object doTest(@RequestBody TEMP_T t){
+//        boolean a = userService.deleteUsers(t.getIds().toArray(new Integer[t.getIds().size()]));
+//        if(true == a){
+//            return new AjaxResult(true,"删除成功");
+//        }
+//        return new AjaxResult(false,"删除失败");
+//    }
+
+
 }
