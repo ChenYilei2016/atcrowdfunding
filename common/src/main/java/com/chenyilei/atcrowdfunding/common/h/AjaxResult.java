@@ -1,9 +1,5 @@
 package com.chenyilei.atcrowdfunding.common.h;
 
-import org.apache.poi.ss.formula.functions.T;
-
-import java.util.List;
-
 /**
  * --添加相关注释--
  *
@@ -15,6 +11,17 @@ public class AjaxResult <T>{
     private boolean success ;
     private String message ;
     private Page<T> page;
+
+    public AjaxResult(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+
+    public AjaxResult(boolean success, String message, Page page) {
+        this.success = success;
+        this.message = message;
+        this.page = page;
+    }
 
     public boolean isSuccess() {
         return success;
@@ -32,10 +39,7 @@ public class AjaxResult <T>{
         return success;
     }
 
-    public AjaxResult(boolean success, String message) {
-        this.success = success;
-        this.message = message;
-    }
+
 
     public void setSuccess(boolean success) {
         this.success = success;

@@ -59,4 +59,8 @@
 		from t_user where loginacct=#{loginacct} and userpswd=#{userpswd}
 	</select>
 
+	<delete id="DD" parameterType="java.lang.String">
+		delete from t_user where id = #{id}
+	</delete>
+
 </mapper>

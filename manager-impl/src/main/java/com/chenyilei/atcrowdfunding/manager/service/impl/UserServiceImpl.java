@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.weekend.Weekend;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,11 +52,30 @@ public class UserServiceImpl implements UserService {
             queryText = queryText.replaceAll("%","\\\\%");
             example.createCriteria().andLike("loginacct","%"+queryText+"%").orLike("username","%"+queryText+"%");
         }
+        example.setOrderByClause("createtime desc");
         List<User> users = userMapper.selectByExample(example);
 
         PageInfo info = new PageInfo(users);
         Page<User> result = new Page<>(info);
 
         return result;
+    }
+
+    @Override
+    public int saveUser(User user) {
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        user.setCreatetime( s.format(new Date()));
+        user.setUserpswd("root");
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public User queryUserById(String id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 }

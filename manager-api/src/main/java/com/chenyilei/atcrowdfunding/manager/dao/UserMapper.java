@@ -18,4 +18,6 @@ public interface UserMapper extends Mapper<User> {
 //    int updateByPrimaryKey(User record);
 
 	User queryUserlogin(Map<String, Object> paramMap);
+
+	int DD(String id);
 }

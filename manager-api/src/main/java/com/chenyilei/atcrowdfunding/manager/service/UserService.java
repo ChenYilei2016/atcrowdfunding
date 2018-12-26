@@ -16,4 +16,10 @@ public interface UserService {
     User queryUserlogin(Map<String, Object> paramMap);
 
     Page<User> queryUserList(Integer pageno, Integer pagesize, String queryText);
+
+    int saveUser(User user);
+
+    User queryUserById(String id);
+
+    int updateUser(User user);
 }

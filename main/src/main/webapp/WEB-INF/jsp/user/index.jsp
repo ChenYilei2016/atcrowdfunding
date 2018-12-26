@@ -35,7 +35,7 @@
             <li style="padding-top:8px;">
 				<div class="btn-group">
 				  <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i> 张三 <span class="caret"></span>
+					<i class="glyphicon glyphicon-user"></i> ${sessionScope.user.username } <span class="caret"></span>
 				  </button>
 					  <ul class="dropdown-menu" role="menu">
 						<li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
@@ -70,7 +70,7 @@
 						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span> 
 						<ul style="margin-top:10px;">
 							<li style="height:30px;">
-								<a href="user.html" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
+								<a href="${APP_PATH }/user/toIndex.htm" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="role.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a> 
@@ -141,16 +141,16 @@
   </div>
   <button id="queryBtn" type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
-<button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
-<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+<button type="button" class="btn btn-danger" id="deleteBatchBtn"  style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+<button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APP_PATH}/user/toAdd.htm'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 <br>
  <hr style="clear:both;">
           <div class="table-responsive">
             <table class="table  table-bordered">
               <thead>
-                <tr >
+                <tr>
                   <th width="30">#</th>
-				  <th width="30"><input type="checkbox"></th>
+				  <th width="30"><input id="allCheckbox" type="checkbox"></th>
                   <th>账号</th>
                   <th>名称</th>
                   <th>邮箱地址</th>
@@ -213,7 +213,7 @@
             
             var jsonObj = {
         			"pageno" : 1,
-        			"pagesize" : 3
+        			"pagesize" : 10 
         		};
             
             
@@ -239,14 +239,14 @@
             				$.each(data,function(i,n){
             					content+='<tr>';
                 				content+='  <td>'+(i+1)+'</td>';
-                				content+='  <td><input type="checkbox"></td>';
+                				content+='  <td><input type="checkbox" id="'+n.id+'"></td>';
                 				content+='  <td>'+n.loginacct+'</td>';
                 				content+='  <td>'+n.username+'</td>';
                 				content+='  <td>'+n.email+'</td>';
                 				content+='  <td>';
                 				content+='	  <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
-                				content+='	  <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
-                				content+='	  <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
+                				content+='	  <button type="button" onclick="window.location.href=\'${APP_PATH}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
+                				content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                 				content+='  </td>';
                 				content+='</tr>';
             				});
@@ -296,6 +296,90 @@
             	queryPageUser(1);
             });
             
+
+            function deleteUser(id,loginacct){
+				layer.confirm("确认要删除["+loginacct+"]用户吗?",  {icon: 3, title:'提示'}, function(cindex){
+					layer.close(cindex);
+					$.ajax({
+						type : "POST",
+						data : {
+							"id" : id
+						},
+						url : "${APP_PATH}/user/doDelete.do",
+						beforeSend : function() {
+							return true ;
+						},
+						success : function(result){
+							if(result.success){
+								window.location.href="${APP_PATH}/user/toIndex.htm";
+							}else{
+								layer.msg("删除用户失败", {time:1000, icon:5, shift:6});
+							}
+						},
+						error : function(){
+							layer.msg("删除失败", {time:1000, icon:5, shift:6});
+						}
+					});
+				}, function(cindex){
+					layer.close(cindex);
+				});
+            }
+            
+            
+            $("#allCheckbox").click(function(){
+            	var checkedStatus = this.checked ;
+            	//alert(checkedStatus);
+            	
+            	$("tbody tr td input[type='checkbox']").attr("checked",checkedStatus);
+
+            });
+            
+            
+            $("#deleteBatchBtn").click(function(){
+            	
+            	var selectCheckbox = $("tbody tr td input:checked");
+
+            	if(selectCheckbox.length==0){
+            		layer.msg("至少选择一个用户进行删除!请选择用户!", {time:1000, icon:5, shift:6}); 
+    				return false ;
+    			}
+            	
+            	var idStr = "";
+            	
+            	$.each(selectCheckbox,function(i,n){
+            		//  url?id=5&id=6&id=7
+            		if(i!=0){
+            			idStr += "&";
+            		}
+            		idStr += "id="+n.id; 
+            	}); 
+            	
+            	
+            	layer.confirm("确认要删除这些用户吗?",  {icon: 3, title:'提示'}, function(cindex){
+            		layer.close(cindex);
+            		$.ajax({
+                		type : "POST",
+                		data : idStr,
+                		url : "${APP_PATH}/user/doDeleteBatch.do",
+                		beforeSend : function() {                  			
+                			return true ;
+                		},
+                		success : function(result){
+                			if(result.success){
+                				window.location.href="${APP_PATH}/user/toIndex.htm";
+                			}else{
+                				layer.msg("删除用户失败", {time:1000, icon:5, shift:6}); 
+                			}
+                		},
+                		error : function(){
+                			layer.msg("删除失败", {time:1000, icon:5, shift:6}); 
+                		}
+                	});
+    			}, function(cindex){
+    			    layer.close(cindex);
+    			});
+            	
+            });
             
         </script>
   </body>

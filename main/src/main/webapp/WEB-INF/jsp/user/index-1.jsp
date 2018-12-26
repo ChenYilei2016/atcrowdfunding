@@ -160,7 +160,7 @@
               <tbody>
               
               
-              	<c:forEach items="${page.datas}" var="user" varStatus="status">
+              	<c:forEach items="${page.datas }" var="user" varStatus="status">
 	                <tr>
 	                  <td>${status.count }</td>
 					  <td><input type="checkbox"></td>
