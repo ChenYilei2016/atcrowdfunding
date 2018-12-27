@@ -3,7 +3,9 @@ package com.chenyilei.atcrowdfunding.manager.controller;
 import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.AjaxResult;
 import com.chenyilei.atcrowdfunding.common.h.Page;
+import com.chenyilei.atcrowdfunding.common.vo.Data;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * --添加相关注释--
@@ -22,15 +25,16 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
     @Autowired
     UserService userService;
-    @RequestMapping("/toIndex")
+    @RequestMapping("/index")
     public String toIndex(){
         return "user/index";
     }
-    @RequestMapping("/index")
+    @RequestMapping("/doIndex")
     @ResponseBody
     public Object index(		@RequestParam(value="pageno",required=false,defaultValue="1") Integer pageno,
                                 @RequestParam(value="pagesize",required=false,defaultValue="2")  Integer pagesize,
@@ -94,15 +98,15 @@ public class UserController {
      *  }
      *
      */
-    @RequestMapping("/doDeleteBatch.do")
-    @ResponseBody
-    public Object doDeleteBatch(@RequestParam("ids") List<Integer> ids){
-        boolean a = userService.deleteUsers(ids.toArray(new Integer[ids.size()]));
-        if(true == a){
-            return new AjaxResult(true,"删除成功");
-        }
-        return new AjaxResult(false,"删除失败");
-    }
+//    @RequestMapping("/doDeleteBatch.do")
+//    @ResponseBody
+//    public Object doDeleteBatch(@RequestParam("ids") List<Integer> ids){
+//        boolean a = userService.deleteUsers(ids.toArray(new Integer[ids.size()]));
+//        if(true == a){
+//            return new AjaxResult(true,"删除成功");
+//        }
+//        return new AjaxResult(false,"删除失败");
+//    }
 
     /**
      *  对应的一个整体json数据字符串
@@ -110,26 +114,17 @@ public class UserController {
 *        contentType: 'application/json; charset=UTF-8',
 *        data : JSON.stringify(sendJson)
      */
-//    static class TEMP_T{
-//        List<Integer> ids;
-//
-//        public List<Integer> getIds() {
-//            return ids;
-//        }
-//
-//        public void setIds(List<Integer> ids) {
-//            this.ids = ids;
-//        }
-//    }
-//    @RequestMapping("/doDeleteBatch.do")
-//    @ResponseBody
-//    public Object doTest(@RequestBody TEMP_T t){
-//        boolean a = userService.deleteUsers(t.getIds().toArray(new Integer[t.getIds().size()]));
-//        if(true == a){
-//            return new AjaxResult(true,"删除成功");
-//        }
-//        return new AjaxResult(false,"删除失败");
-//    }
+
+    @RequestMapping("/doDeleteBatch.do")
+    @ResponseBody
+    public Object doTest(@RequestBody Data t){
+        List<Integer> listId= t.getUsers().stream().map(x->x.getId()).collect(Collectors.toList());
+        boolean a = userService.deleteUsers(listId.toArray(new Integer[listId.size()]));
+        if(true == a){
+            return new AjaxResult(true,"删除成功");
+        }
+        return new AjaxResult(false,"删除失败");
+    }
 
 
 }

@@ -62,68 +62,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="tree">
-				<ul style="padding-left:0px;" class="list-group">
-					<li class="list-group-item tree-closed" >
-						<a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a> 
-					</li>
-					<li class="list-group-item">
-						<span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span> 
-						<ul style="margin-top:10px;">
-							<li style="height:30px;">
-								<a href="${APP_PATH }/user/toIndex.htm" style="color:red;"><i class="glyphicon glyphicon-user"></i> 用户维护</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="role.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 许可维护</a> 
-							</li>
-						</ul>
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon-ok"></i> 业务审核 <span class="badge" style="float:right">3</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="auth_cert.html"><i class="glyphicon glyphicon-check"></i> 实名认证审核</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="auth_adv.html"><i class="glyphicon glyphicon-check"></i> 广告审核</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="auth_project.html"><i class="glyphicon glyphicon-check"></i> 项目审核</a> 
-							</li>
-						</ul>
-					</li>
-					<li class="list-group-item tree-closed">
-						<span><i class="glyphicon glyphicon-th-large"></i> 业务管理 <span class="badge" style="float:right">7</span></span> 
-						<ul style="margin-top:10px;display:none;">
-							<li style="height:30px;">
-								<a href="cert.html"><i class="glyphicon glyphicon-picture"></i> 资质维护</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="type.html"><i class="glyphicon glyphicon-equalizer"></i> 分类管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="process.html"><i class="glyphicon glyphicon-random"></i> 流程管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="advertisement.html"><i class="glyphicon glyphicon-hdd"></i> 广告管理</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="message.html"><i class="glyphicon glyphicon-comment"></i> 消息模板</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="project_type.html"><i class="glyphicon glyphicon-list"></i> 项目分类</a> 
-							</li>
-							<li style="height:30px;">
-								<a href="tag.html"><i class="glyphicon glyphicon-tags"></i> 项目标签</a> 
-							</li>
-						</ul>
-					</li>
-					<li class="list-group-item tree-closed" >
-						<a href="param.html"><i class="glyphicon glyphicon-list-alt"></i> 参数管理</a> 
-					</li>
-				</ul>
+                <jsp:include page="/WEB-INF/jsp/common/menu.jsp"/>
 			</div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -223,7 +162,7 @@
             	$.ajax({
             		type : "POST",
             		data : jsonObj,
-            		url : "${APP_PATH}/user/index.do",
+            		url : "${APP_PATH}/user/doIndex.do",
             		beforeSend : function(){
             			loadingIndex = layer.load(2, {time: 10*1000});
             			return true ;
@@ -341,15 +280,18 @@
             $("#deleteBatchBtn").click(function(){
                 var selectList = $("tbody tr td input:checked");
                 var sendData = "ids=";
-                var sendJson= {};sendJson.ids = new Array();
+                var sendJson= {};sendJson.users = new Array();//另外一种传递方式
                 // ?id=1,2,3,4;
                 // ?id=1&id=2
                 $.each(selectList,function (i,n) {
-                    if(i != 0){
-                        sendData+=',';
-                    }
-                    sendData+=n.id;
-                    // sendJson.ids.push(n.id);
+                    // if(i != 0){
+                    //     sendData+=',';
+                    // }
+                    // sendData+=n.id;
+                    sendJson.users.push({
+						id:n.id,
+						loginacct:"临时名字"
+					});
                 });
                 //发送ajax消息 删除多个id
                 layer.confirm("确认要删除[]用户吗?",  {icon: 3, title:'提示'}, function(cindex){
@@ -357,8 +299,8 @@
                     $.ajax({
                         type : "POST",
                         dataType:"json",
-                        // contentType: 'application/json; charset=UTF-8',
-                        data : sendData
+                        contentType: 'application/json; charset=UTF-8',
+                        data : JSON.stringify(sendJson)
                         ,
                         url : "${APP_PATH}/user/doDeleteBatch.do",
                         beforeSend : function() {

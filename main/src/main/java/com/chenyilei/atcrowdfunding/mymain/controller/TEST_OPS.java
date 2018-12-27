@@ -30,10 +30,13 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"/spring/spring-context.xml"})
-public class TestControllerTest {
+public class TEST_OPS {
     @Autowired
     private UserMapper userMapper ;
 
+    /**
+     * 为数据库添加数据 测试
+     */
     @Test
     public void ADD_USER(){
         List list = new ArrayList();
@@ -49,6 +52,9 @@ public class TestControllerTest {
         userMapper.insertList(list);
     }
 
+    /**
+     * 测试分页 以及相关数据的显示结果
+     */
     @Test
     public void queryUserList() {
         PageHelper.startPage(2,2);
@@ -57,16 +63,16 @@ public class TestControllerTest {
         PageInfo info = new PageInfo(users);
         info.setNavigatePages(2);
 
-        System.out.println("总页数:"+info.getPages());
-        System.out.println("当前页数:"+info.getPageNum());
-        System.out.println("总条数:"+info.getTotal());
+        System.err.println("总页数:"+info.getPages());
+        System.err.println("当前页数:"+info.getPageNum());
+        System.err.println("总条数:"+info.getTotal());
 
-        info.getList().forEach(System.out::println);
+        info.getList().forEach(System.err::println);
 
-        System.out.println("数据"+users);
-        System.out.println(info.getNavigateFirstPage());
-        System.out.println(info.getNavigateLastPage());
-        System.out.println(info.getNavigatePages());
+        System.err.println("数据"+users);
+        System.err.println(info.getNavigateFirstPage());
+        System.err.println(info.getNavigateLastPage());
+        System.err.println(info.getNavigatePages());
     }
 }
 
