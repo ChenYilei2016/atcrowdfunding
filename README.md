@@ -1,5 +1,7 @@
 # atcrowdfunding
 
+整合了通用mapper 更加简洁
+
 血的教训1: 随时 commit
 2 : 放入 log4j.properties 文件  弄了一天多 就是因为没日志的缘故,放了日志 10秒找出原因... 
 
