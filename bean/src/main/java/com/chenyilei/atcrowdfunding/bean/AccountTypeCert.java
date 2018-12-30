@@ -1,7 +1,9 @@
 package com.chenyilei.atcrowdfunding.bean;
 
-public class AccountTypeCert {
+import javax.persistence.Id;
 
+public class AccountTypeCert {
+    @Id
     private Integer id;
 
     private String accttype;

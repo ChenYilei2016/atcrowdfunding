@@ -6,29 +6,29 @@
     <result column="roleid" property="roleid" jdbcType="INTEGER" />
     <result column="permissionid" property="permissionid" jdbcType="INTEGER" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_role_permission
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chenyilei.atcrowdfunding.bean.RolePermission" >
-    insert into t_role_permission (id, roleid, permissionid
-      )
-    values (#{id,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{permissionid,jdbcType=INTEGER}
-      )
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.chenyilei.atcrowdfunding.bean.RolePermission" >
-    update t_role_permission
-    set roleid = #{roleid,jdbcType=INTEGER},
-      permissionid = #{permissionid,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, roleid, permissionid
-    from t_role_permission
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, roleid, permissionid
-    from t_role_permission
-  </select>
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+    <!--delete from t_role_permission-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.chenyilei.atcrowdfunding.bean.RolePermission" >-->
+    <!--insert into t_role_permission (id, roleid, permissionid-->
+      <!--)-->
+    <!--values (#{id,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{permissionid,jdbcType=INTEGER}-->
+      <!--)-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.chenyilei.atcrowdfunding.bean.RolePermission" >-->
+    <!--update t_role_permission-->
+    <!--set roleid = #{roleid,jdbcType=INTEGER},-->
+      <!--permissionid = #{permissionid,jdbcType=INTEGER}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >-->
+    <!--select id, roleid, permissionid-->
+    <!--from t_role_permission-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <!--<select id="selectAll" resultMap="BaseResultMap" >-->
+    <!--select id, roleid, permissionid-->
+    <!--from t_role_permission-->
+  <!--</select>-->
 </mapper>

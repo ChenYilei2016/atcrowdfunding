@@ -135,9 +135,37 @@
 					}
 				});
 			    queryPageUser(1);
+                showMenu();
             });
+
+            /**
+             *  显示本页菜单
+             */
+            <%--function showMenu () {--%>
+                <%--&lt;%&ndash;var remoteaddr = '${pageContext.request.requestURL}';&ndash;%&gt;--%>
+                <%--var remoteaddr = '<%=request.getServletPath()%>';--%>
+                <%--alert(remoteaddr);--%>
+            <%--}--%>
+            function showMenu(){
+                var href = window.location.href ;
+                var host = window.location.host ;
+                var index = href.indexOf(host);
+                var path = href.substring(index + host.length);
+
+                var contextPath = "${APP_PATH}";
+                var pathAddress = path.substring(contextPath.length);
+
+                var alink = $(".list-group a[href*='"+pathAddress+"']");
+
+                alink.css("color","red");
+
+                alink.parent().parent().parent().removeClass("tree-closed");
+                alink.parent().parent().show();
+            }
+
+
             $("tbody .btn-success").click(function(){
-                window.location.href = "assignRole.html";
+                window.location.href = "assignRole.jsp";
             });
             $("tbody .btn-primary").click(function(){
                 window.location.href = "edit.html";
@@ -183,7 +211,7 @@
                 				content+='  <td>'+n.username+'</td>';
                 				content+='  <td>'+n.email+'</td>';
                 				content+='  <td>';
-                				content+='	  <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                				content+='	  <button type="button" onclick="window.location.href=\'${APP_PATH}/user/assignRole.htm?id='+n.id+'\'" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
                 				content+='	  <button type="button" onclick="window.location.href=\'${APP_PATH}/user/toUpdate.htm?id='+n.id+'\'" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
                 				content+='	  <button type="button" onclick="deleteUser('+n.id+',\''+n.loginacct+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                 				content+='  </td>';

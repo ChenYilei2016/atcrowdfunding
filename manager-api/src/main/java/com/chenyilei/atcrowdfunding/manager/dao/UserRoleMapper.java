@@ -1,17 +1,13 @@
 package com.chenyilei.atcrowdfunding.manager.dao;
 
 import com.chenyilei.atcrowdfunding.bean.UserRole;
+import com.chenyilei.atcrowdfunding.common.ann.MyMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserRoleMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface UserRoleMapper extends MyMapper<UserRole> {
 
-    int insert(UserRole record);
+    void saveUserRoleRelationship(@Param("userid") Integer userid, @Param("ids") List<Integer> ids);
 
-    UserRole selectByPrimaryKey(Integer id);
-
-    List<UserRole> selectAll();
-
-    int updateByPrimaryKey(UserRole record);
 }

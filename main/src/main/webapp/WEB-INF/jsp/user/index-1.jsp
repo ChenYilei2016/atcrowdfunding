@@ -230,7 +230,7 @@
 				});
             });
             $("tbody .btn-success").click(function(){
-                window.location.href = "assignRole.html";
+                window.location.href = "assignRole.htm";
             });
             $("tbody .btn-primary").click(function(){
                 window.location.href = "edit.html";

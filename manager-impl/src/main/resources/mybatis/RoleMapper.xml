@@ -5,26 +5,26 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_role
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.chenyilei.atcrowdfunding.bean.Role" >
-    insert into t_role (id, name)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.chenyilei.atcrowdfunding.bean.Role" >
-    update t_role
-    set name = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, name
-    from t_role
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, name
-    from t_role
-  </select>
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+    <!--delete from t_role-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.chenyilei.atcrowdfunding.bean.Role" >-->
+    <!--insert into t_role (id, name)-->
+    <!--values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.chenyilei.atcrowdfunding.bean.Role" >-->
+    <!--update t_role-->
+    <!--set name = #{name,jdbcType=VARCHAR}-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</update>-->
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >-->
+    <!--select id, name-->
+    <!--from t_role-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</select>-->
+  <!--<select id="selectAll" resultMap="BaseResultMap" >-->
+    <!--select id, name-->
+    <!--from t_role-->
+  <!--</select>-->
 </mapper>

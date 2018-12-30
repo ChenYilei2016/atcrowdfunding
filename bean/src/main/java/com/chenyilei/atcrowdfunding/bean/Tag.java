@@ -1,6 +1,9 @@
 package com.chenyilei.atcrowdfunding.bean;
 
+import javax.persistence.Id;
+
 public class Tag {
+    @Id
     private Integer id;
 
     private Integer pid;

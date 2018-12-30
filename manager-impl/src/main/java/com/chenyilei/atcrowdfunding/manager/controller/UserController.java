@@ -1,18 +1,17 @@
 package com.chenyilei.atcrowdfunding.manager.controller;
 
+import com.chenyilei.atcrowdfunding.bean.Role;
 import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.AjaxResult;
 import com.chenyilei.atcrowdfunding.common.h.Page;
 import com.chenyilei.atcrowdfunding.common.vo.Data;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -127,4 +126,59 @@ public class UserController {
     }
 
 
+    @RequestMapping("/assignRole")
+    public String assignRole(@RequestParam("id")Integer id,Map map){
+        List<Role> leftRoleList = new ArrayList<>();
+        List<Role> rightRoleList = new ArrayList<>();
+
+        //找到所有 Role
+        List<Role> allRoleList = userService.queryAllRoleList();
+        //已分配的role
+        List<Integer> rightIds  = userService.queryRightRoleIds(id);
+
+        for(Role temp : allRoleList){
+            if(rightIds.contains(temp.getId())){
+                rightRoleList.add(temp);
+            }
+            //未分配的role
+            else{
+                leftRoleList.add(temp);
+            }
+        }
+        map.put("leftRoleList",leftRoleList);
+        map.put("rightRoleList",rightRoleList);
+
+        return "user/assignRole";
+    }
+
+    //分配角色
+    @ResponseBody
+    @RequestMapping("/doAssignRole")
+    public Object doAssignRole(Integer userid,@RequestParam("ids[]")List<Integer> ids){
+        AjaxResult result = new AjaxResult();
+        try {
+            userService.saveUserRoleRelationship(userid,ids);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            e.printStackTrace();
+            result.setMessage("分配角色数据失败!");
+        }
+        return result;
+    }
+    //取消分配角色
+    @ResponseBody
+    @RequestMapping("/doUnAssignRole")
+    public Object doUnAssignRole(Integer userid,@RequestParam("ids[]")List<Integer> ids){
+        AjaxResult result = new AjaxResult();
+        try {
+            userService.deleteUserRoleRelationship(userid,ids);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            e.printStackTrace();
+            result.setMessage("取消分配角色数据失败!");
+        }
+        return result;
+    }
 }

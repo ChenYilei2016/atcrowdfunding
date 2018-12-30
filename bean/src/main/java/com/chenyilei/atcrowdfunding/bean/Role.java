@@ -1,6 +1,12 @@
 package com.chenyilei.atcrowdfunding.bean;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Table(name = "t_role")
 public class Role {
+    @Id
     private Integer id;
 
     private String name;

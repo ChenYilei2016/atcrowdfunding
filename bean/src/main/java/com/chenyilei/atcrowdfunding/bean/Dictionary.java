@@ -1,6 +1,9 @@
 package com.chenyilei.atcrowdfunding.bean;
 
+import javax.persistence.Id;
+
 public class Dictionary {
+    @Id
     private Integer id;
 
     private String name;

@@ -1,8 +1,10 @@
 package com.chenyilei.atcrowdfunding.manager.service;
 
+import com.chenyilei.atcrowdfunding.bean.Role;
 import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +28,12 @@ public interface UserService {
     int deleteUser(String id);
 
     boolean deleteUsers(Integer[] id);
+
+    List<Role> queryAllRoleList();
+
+    List<Integer> queryRightRoleIds(Integer id);
+
+    void saveUserRoleRelationship(Integer userid, List<Integer> ids);
+
+    void deleteUserRoleRelationship(Integer userid, List<Integer> ids);
 }

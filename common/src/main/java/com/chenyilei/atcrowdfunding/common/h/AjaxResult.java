@@ -1,5 +1,7 @@
 package com.chenyilei.atcrowdfunding.common.h;
 
+import lombok.NoArgsConstructor;
+
 /**
  * --添加相关注释--
  *
@@ -7,6 +9,7 @@ package com.chenyilei.atcrowdfunding.common.h;
  * @date 2018/12/24- 19:56
  */
 
+@NoArgsConstructor
 public class AjaxResult <T>{
     private boolean success ;
     private String message ;

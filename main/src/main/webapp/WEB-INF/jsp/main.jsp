@@ -103,6 +103,10 @@
 					}
 				});
             });
+
+            $(function () {
+
+            });
         </script>
   </body>
 </html>

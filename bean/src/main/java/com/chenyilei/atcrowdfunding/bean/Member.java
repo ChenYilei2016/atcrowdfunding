@@ -1,6 +1,9 @@
 package com.chenyilei.atcrowdfunding.bean;
 
+import javax.persistence.Id;
+
 public class Member {
+    @Id
     private Integer id;
 
     private String loginacct;

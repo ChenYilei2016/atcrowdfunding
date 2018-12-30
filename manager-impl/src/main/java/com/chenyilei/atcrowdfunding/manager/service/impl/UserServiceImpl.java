@@ -1,8 +1,12 @@
 package com.chenyilei.atcrowdfunding.manager.service.impl;
 
+import com.chenyilei.atcrowdfunding.bean.Role;
 import com.chenyilei.atcrowdfunding.bean.User;
+import com.chenyilei.atcrowdfunding.bean.UserRole;
 import com.chenyilei.atcrowdfunding.common.h.Page;
+import com.chenyilei.atcrowdfunding.manager.dao.RoleMapper;
 import com.chenyilei.atcrowdfunding.manager.dao.UserMapper;
+import com.chenyilei.atcrowdfunding.manager.dao.UserRoleMapper;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -16,6 +20,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * --添加相关注释--
@@ -27,6 +32,10 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper ;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public User queryUserlogin(Map<String, Object> paramMap) {
@@ -88,5 +97,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUsers(Integer[] id) {
         return userMapper.deleteByIdList(Arrays.asList(id)) == id.length;
+    }
+
+    @Override
+    public List<Role> queryAllRoleList() {
+        return roleMapper.selectAll();
+    }
+
+    @Override
+    public List<Integer> queryRightRoleIds(Integer id) {
+        UserRole userRole = new UserRole();
+        userRole.setUserid(id);
+        return userRoleMapper.select(userRole).stream().map(x->x.getRoleid()).collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveUserRoleRelationship(Integer userid, List<Integer> ids) {
+        userRoleMapper.saveUserRoleRelationship(userid,ids);
+    }
+
+    @Override
+    public void deleteUserRoleRelationship(Integer userid, List<Integer> ids) {
+        //删除 是userid 且 包含在ids 中的 roleid
+        Example example = new Example(UserRole.class);
+        example.createCriteria().andEqualTo("userid",userid).andIn("roleid",ids);
+        userRoleMapper.deleteByExample(example);
     }
 }
