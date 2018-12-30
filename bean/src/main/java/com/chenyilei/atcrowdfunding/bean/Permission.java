@@ -1,7 +1,11 @@
 package com.chenyilei.atcrowdfunding.bean;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
+@Table(name = "t_permission")
 public class Permission {
     @Id
     private Integer id;
@@ -13,6 +17,29 @@ public class Permission {
     private String icon;
 
     private String url;
+
+    @Transient
+    private boolean open = true; //默认打开结点
+
+    @Transient
+    private List<Permission> children;
+
+
+    public boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public List<Permission> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Permission> children) {
+        this.children = children;
+    }
 
     public Integer getId() {
         return id;

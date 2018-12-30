@@ -170,6 +170,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/doUnAssignRole")
     public Object doUnAssignRole(Integer userid,@RequestParam("ids[]")List<Integer> ids){
+
         AjaxResult result = new AjaxResult();
         try {
             userService.deleteUserRoleRelationship(userid,ids);

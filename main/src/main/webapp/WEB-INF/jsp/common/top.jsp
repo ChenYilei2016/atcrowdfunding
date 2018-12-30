@@ -14,7 +14,7 @@
 		  </ul>
     </div>
 </li>
-         <li style="margin-left:10px;padding-top:8px;">
+ <li style="margin-left:10px;padding-top:8px;">
 	<button type="button" class="btn btn-default btn-danger">
 	  <span class="glyphicon glyphicon-question-sign"></span> 帮助
 	</button>

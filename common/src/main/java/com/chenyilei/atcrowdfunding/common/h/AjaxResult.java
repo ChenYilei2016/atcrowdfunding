@@ -1,5 +1,6 @@
 package com.chenyilei.atcrowdfunding.common.h;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
@@ -10,10 +11,12 @@ import lombok.NoArgsConstructor;
  */
 
 @NoArgsConstructor
+@Data
 public class AjaxResult <T>{
-    private boolean success ;
+    private boolean success = true;
     private String message ;
     private Page<T> page;
+    private T data;
 
     public AjaxResult(boolean success, String message) {
         this.success = success;
