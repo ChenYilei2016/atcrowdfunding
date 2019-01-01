@@ -24,4 +24,9 @@ public class PermissionServiceImpl implements PermissionService {
     public List<Permission> queryAllList() {
         return permissionMapper.selectAll();
     }
+
+    @Override
+    public void addPermission(Permission permission) {
+        permissionMapper.insertSelective(permission);
+    }
 }

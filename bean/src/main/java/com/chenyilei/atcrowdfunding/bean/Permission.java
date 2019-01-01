@@ -19,6 +19,12 @@ public class Permission {
     private String url;
 
     @Transient
+    private boolean checked = true;
+
+    @Transient
+    private Integer level;
+
+    @Transient
     private boolean open = true; //默认打开结点
 
     @Transient

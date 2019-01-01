@@ -13,4 +13,6 @@ import java.util.List;
 public interface PermissionService {
 
     List<Permission> queryAllList();
+
+    void addPermission(Permission permission);
 }
