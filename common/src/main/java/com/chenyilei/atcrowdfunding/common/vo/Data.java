@@ -13,4 +13,7 @@ import java.util.List;
 @lombok.Data
 public class Data {
     private List<User> users;
+
+    //给角色role 分配权限
+    private List<Integer> ids;
 }

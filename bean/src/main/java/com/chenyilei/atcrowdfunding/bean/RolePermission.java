@@ -1,7 +1,9 @@
 package com.chenyilei.atcrowdfunding.bean;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "t_role_permission")
 public class RolePermission {
     @Id
     private Integer id;

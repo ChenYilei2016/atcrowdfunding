@@ -19,7 +19,7 @@ public class Permission {
     private String url;
 
     @Transient
-    private boolean checked = true;
+    private boolean checked = false;
 
     @Transient
     private Integer level;
@@ -30,6 +30,25 @@ public class Permission {
     @Transient
     private List<Permission> children;
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
 
     public boolean getOpen() {
         return open;
