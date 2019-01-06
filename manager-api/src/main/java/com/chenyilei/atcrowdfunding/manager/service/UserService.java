@@ -1,5 +1,6 @@
 package com.chenyilei.atcrowdfunding.manager.service;
 
+import com.chenyilei.atcrowdfunding.bean.Permission;
 import com.chenyilei.atcrowdfunding.bean.Role;
 import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.Page;
@@ -36,4 +37,6 @@ public interface UserService {
     void saveUserRoleRelationship(Integer userid, List<Integer> ids);
 
     void deleteUserRoleRelationship(Integer userid, List<Integer> ids);
+
+    List<Permission> queryPermissionByUserId(Integer userId);
 }

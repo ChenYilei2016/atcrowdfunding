@@ -1,6 +1,8 @@
 package com.chenyilei.atcrowdfunding.mymain.controller;
 
+import com.chenyilei.atcrowdfunding.bean.Permission;
 import com.chenyilei.atcrowdfunding.bean.User;
+import com.chenyilei.atcrowdfunding.common.diy.AjaxHelpler;
 import com.chenyilei.atcrowdfunding.common.h.AjaxResult;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,7 @@ public class DispatherController {
 
     public ThreadLocal threadLocal;
 
+
     @RequestMapping("/index.htm")
     public String index(){
         return "index";
@@ -40,7 +44,15 @@ public class DispatherController {
         return "login";
     }
     @RequestMapping("/main.htm")
-    public String main1(){
+    public String main1(HttpSession httpSession){
+        User user = (User)httpSession.getAttribute("user");
+        Integer userId = user.getId();
+        //根据userid 查询出 具有的role 对应的权限
+        List<Permission> permissionList =userService.queryPermissionByUserId(userId);
+        //组合permission 得到permissionRoot
+        Permission permissionRoot = AjaxHelpler.PermissionZuHe(permissionList);
+
+        httpSession.setAttribute("permissionRoot",permissionRoot);
         return "main";
     }
 

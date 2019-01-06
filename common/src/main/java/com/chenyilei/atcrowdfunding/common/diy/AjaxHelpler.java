@@ -1,6 +1,10 @@
 package com.chenyilei.atcrowdfunding.common.diy;
 
+import com.chenyilei.atcrowdfunding.bean.Permission;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,5 +42,26 @@ public class AjaxHelpler {
 
     public static Object end(){
         return result.get();
+    }
+
+    public static Permission PermissionZuHe( List<Permission> permissionList) {
+        //组合permission 得到permissionRoot
+        Permission permissionRoot = null;
+        Map map = new HashMap();
+        for (Permission temp : permissionList) {
+                map.put(temp.getId(), temp);
+        }
+        for (Permission temp : permissionList) {
+            if (temp.getPid() == -1) {
+                permissionRoot = temp;
+            } else {
+                Permission parent = (Permission) map.get(temp.getPid());
+                if(parent.getChildren() == null){
+                    parent.setChildren(new ArrayList<>());
+                }
+                parent.getChildren().add(temp);
+            }
+        }
+        return permissionRoot;
     }
 }

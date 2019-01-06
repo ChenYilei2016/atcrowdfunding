@@ -59,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
         List<RolePermission> collect = datas.getIds().stream().map(x -> {
             RolePermission rolePermission1 = new RolePermission();
             rolePermission1.setRoleid(roleid);
-            rolePermission.setPermissionid(x);
+            rolePermission1.setPermissionid(x);
             return rolePermission1;
         }).collect(Collectors.toList());
 

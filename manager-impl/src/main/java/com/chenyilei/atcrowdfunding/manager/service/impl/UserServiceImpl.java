@@ -1,10 +1,9 @@
 package com.chenyilei.atcrowdfunding.manager.service.impl;
 
-import com.chenyilei.atcrowdfunding.bean.Role;
-import com.chenyilei.atcrowdfunding.bean.User;
-import com.chenyilei.atcrowdfunding.bean.UserRole;
+import com.chenyilei.atcrowdfunding.bean.*;
 import com.chenyilei.atcrowdfunding.common.h.Page;
 import com.chenyilei.atcrowdfunding.manager.dao.RoleMapper;
+import com.chenyilei.atcrowdfunding.manager.dao.RolePermissionMapper;
 import com.chenyilei.atcrowdfunding.manager.dao.UserMapper;
 import com.chenyilei.atcrowdfunding.manager.dao.UserRoleMapper;
 import com.chenyilei.atcrowdfunding.manager.service.UserService;
@@ -12,14 +11,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private RoleMapper roleMapper;
     @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
     @Override
     public User queryUserlogin(Map<String, Object> paramMap) {
@@ -122,5 +121,14 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(UserRole.class);
         example.createCriteria().andEqualTo("userid",userid).andIn("roleid",ids);
         userRoleMapper.deleteByExample(example);
+    }
+
+    @Override
+    public List<Permission> queryPermissionByUserId(Integer userId) {
+        /**
+         *  根据userid 查找 role的全部id
+         *  根据roleId 查找 permission
+         */
+        return userMapper.queryPermissionByUserId(userId);
     }
 }
