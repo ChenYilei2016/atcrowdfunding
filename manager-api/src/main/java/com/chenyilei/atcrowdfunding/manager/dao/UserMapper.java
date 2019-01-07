@@ -29,6 +29,6 @@ public interface UserMapper extends Mapper<User> , DeleteByIdListMapper<User,Int
 			"FROM t_user_role `ur` " +
 			"JOIN t_role_permission `rp` ON ur.roleid = rp.roleid " +
 			"JOIN t_permission `tp` ON tp.id = rp.permissionid " +
-			"WHERE userid = #{userId}")
+			"WHERE userid = #{userId} order by tp.id")
 	List<Permission> queryPermissionByUserId(Integer userId);
 }

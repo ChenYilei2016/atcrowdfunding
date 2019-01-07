@@ -37,14 +37,18 @@
     <!--</bean>-->
 
     <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**" />
-            <bean class="com.chenyilei.atcrowdfunding.manager.interceptor.HttpInterceptor"></bean>
-        </mvc:interceptor>
         <!--<mvc:interceptor>-->
             <!--<mvc:mapping path="/**" />-->
-            <!--<bean class="com.chenyilei.atcrowdfunding.mymainin.interceptor.HttpInterceptor"></bean>-->
+            <!--<bean class="com.chenyilei.atcrowdfunding.manager.interceptor.HttpInterceptor"></bean>-->
         <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.chenyilei.atcrowdfunding.mymain.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.chenyilei.atcrowdfunding.mymain.interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 	

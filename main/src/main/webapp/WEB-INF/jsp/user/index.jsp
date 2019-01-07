@@ -13,7 +13,9 @@
 	<link rel="stylesheet" href="${APP_PATH }/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="${APP_PATH }/css/font-awesome.min.css">
 	<link rel="stylesheet" href="${APP_PATH }/css/main.css">
-	<style>
+    <link rel="stylesheet" href="${APP_PATH }/jquery/pagination_zh/pagination.css" />
+
+      <style>
 	.tree li {
         list-style-type: none;
 		cursor:pointer;
@@ -105,7 +107,8 @@
 						<ul class="pagination">
 								
 						</ul>
-					 </td>
+                         <div id="Pagination2" class="pagination"><!-- 这里显示分页 --></div>
+                     </td>
 				 </tr>
 
 			  </tfoot>
@@ -120,10 +123,12 @@
     <script src="${APP_PATH }/jquery/jquery-2.1.1.min.js"></script>
     <script src="${APP_PATH }/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${APP_PATH }/script/docs.min.js"></script>
+    <%--<script src="${APP_PATH }/jquery/pagination_zh/jquery.min.js"></script>--%>
+    <script src="${APP_PATH }/jquery/pagination_zh/jquery.pagination.js"></script>
 	<script type="text/javascript" src="${APP_PATH }/jquery/layer/layer.js"></script>
-	
-        <script type="text/javascript">
-            $(function () {
+
+    <script type="text/javascript">
+        $(function () {
 			    $(".list-group-item").click(function(){
 				    if ( $(this).find("ul") ) {
 						$(this).toggleClass("tree-closed");
@@ -248,6 +253,35 @@
             			}else{
             				layer.msg(result.message, {time:1000, icon:5, shift:6});
             			}
+
+            			//测试分页插件------------------------------------------------------------------
+                            //这是一个非常简单的demo实例，让列表元素分页显示
+                            //回调函数的作用是显示对应分页的列表项内容
+                            //回调函数在用户每次点击分页链接的时候执行
+                            //参数page_index{int整型}表示当前的索引页
+                        mypages = result.page;
+                        mydatas = result.page.datas;
+                        var initPagination = function() {
+                            var num_entries = mypages.totalsize; //这是总记录数 不试试页数
+                            // 创建分页
+                            $("#Pagination2").pagination(num_entries, {
+                                num_edge_entries: 1, //边缘页数
+                                num_display_entries: 4, //主体页数
+                                callback: pageselectCallback,
+                                items_per_page: mypages.pagesize, //每页显示1项
+                                current_page: mypages.pageno-1
+                            });
+                        };
+                        function pageselectCallback(page_index, jq){
+                            console.log('pageselectCallback');
+                            console.log(page_index);
+                            //点击事件
+                            queryPageUser(page_index+1);
+                            return false;
+                        }
+                        initPagination();
+                        //测试分页插件------------------------------------------------------------------
+
             		},
             		error : function(){
             			layer.msg("加载数据失败!", {time:1000, icon:5, shift:6});
@@ -350,6 +384,8 @@
                 });
 
             });
+
+
             
         </script>
   </body>

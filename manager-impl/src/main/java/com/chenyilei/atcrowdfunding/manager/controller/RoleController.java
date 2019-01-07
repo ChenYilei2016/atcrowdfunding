@@ -67,10 +67,8 @@ public class RoleController {
 
 		List<Permission> childredPermissons =  permissionService.queryAllList();
 
-
 		//根据角色id查询该角色之前所分配过的许可.
 		List<Integer> permissonIdsForRoleid = permissionService.queryPermissionidsByRoleid(roleid);
-
 
 		Map<Integer,Permission> map = new HashMap<Integer,Permission>();//100
 
