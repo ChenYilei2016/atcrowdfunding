@@ -97,6 +97,7 @@ public class DispatherController {
             //组合permission 得到permissionRoot
             Permission permissionRoot = AjaxHelpler.PermissionZuHe(permissionList);
             session.setAttribute("permissionRoot",permissionRoot);
+
         }catch (Exception e){
             return new AjaxResult(false,"登陆失败");
         }
