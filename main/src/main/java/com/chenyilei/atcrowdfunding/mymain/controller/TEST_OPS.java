@@ -10,6 +10,7 @@ package com.chenyilei.atcrowdfunding.mymain.controller;
 import com.chenyilei.atcrowdfunding.bean.User;
 import com.chenyilei.atcrowdfunding.common.h.Page;
 import com.chenyilei.atcrowdfunding.manager.dao.UserMapper;
+import com.chenyilei.atcrowdfunding.mymain.listenr.MailListener;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.activiti.engine.*;
@@ -24,11 +25,13 @@ import org.activiti.engine.task.TaskQuery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * --添加相关注释--
@@ -53,6 +56,8 @@ public class TEST_OPS {
     @Autowired
     HistoryService historyService;
 
+    private String TestProcess = "testmail";
+
     /**
      *  {@link RepositoryService}
      *  activiti 测试
@@ -60,13 +65,14 @@ public class TEST_OPS {
      */
     @Test
     public void activitiTest1(){
-        processEngine.getRepositoryService().createDeployment()
-                .addClasspathResource("process2.bpmn")
+        processEngine.getRepositoryService()
+                .createDeployment()
+                .addClasspathResource(TestProcess+".bpmn")
                 .deploy();
 
         //查询操作
-        DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
-        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
+//        DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
+//        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
 //        processDefinitionQuery.orderByDeploymentId().desc().list()
 //        processDefinitionQuery.processDefinitionKey("1").list()
     }
@@ -74,14 +80,22 @@ public class TEST_OPS {
     /**
      *  {@link RepositoryService} 用来保存
      * 2 创建流程实例
+     *  zhangsan 组长 <3天
+     *  lisi 经理 >3天
      */
     @Test
     public void activitiTest2(){
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
         //1 查询出 key为 myProcess_1 的流程
-        ProcessDefinition myProcess_1 = processDefinitionQuery.processDefinitionKey("myProcess_2").latestVersion().singleResult();
+        ProcessDefinition myProcess_1 = processDefinitionQuery.processDefinitionKey(TestProcess).latestVersion().singleResult();
+
+        //定义变量
+        Map<String,Object> varMap = new HashMap<>();
+        varMap.put("days","5");
+        varMap.put("mailListener",new MailListener());
+
         //2 用run 开启一个流程实例
-        ProcessInstance processInstance = runtimeService.startProcessInstanceById(myProcess_1.getId());
+        ProcessInstance processInstance = runtimeService.startProcessInstanceById(myProcess_1.getId(),varMap);
 
         System.out.println("实例:"+processInstance);
     }
@@ -93,16 +107,20 @@ public class TEST_OPS {
     @Test
     public void activitiTest3(){
         TaskQuery taskQuery = taskService.createTaskQuery();
-        taskQuery.taskAssignee("zhangsan"); //设置执行人
+//        taskQuery.taskAssignee("zhangsan"); //设置执行人
+        taskQuery.taskAssignee("lisi"); //设置执行人
 
         List<Task> taskList = taskQuery.list();
 
         for (Task task : taskList) {
             System.err.println(task.getName()); //显示执行人所有的任务
+
+            //(暂时不管)也许是别的流程的任务
+            taskService.complete(task.getId());
         }
 
         //执行任务
-        taskService.complete(taskList.get(0).getId()); //用id 决定完成哪个任务
+//        taskService.complete(taskList.get(0).getId()); //用id 决定完成哪个任务
     }
 
     /**
@@ -118,14 +136,26 @@ public class TEST_OPS {
         HistoricProcessInstance historicProcessInstance = historicProcessInstanceQuery.processInstanceId("101").finished().singleResult();
 
     }
+//----------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------
 
+    @Autowired
+    JavaMailSenderImpl sendMail;
+    /**
+     * 测试邮件发送
+     */
+    @Test
+    public void sendMail(){
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setSubject("java-mail test");
+        simpleMailMessage.setFrom("test@chenyilei.com");
+        simpleMailMessage.setTo("admin@chenyilei.com");
+        simpleMailMessage.setSentDate(new Date());
+        simpleMailMessage.setText("主体测试内容!");
 
-
-
-
-
-
-
+        sendMail.send(simpleMailMessage);
+    }
 
     /**
      * {@link UserMapper#insertList(List)}
