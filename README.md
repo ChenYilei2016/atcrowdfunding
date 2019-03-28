@@ -13,7 +13,6 @@ log4j.appender.stdout=org.apache.log4j.ConsoleAppender
 log4j.appender.stdout.Target=System.out
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss S} %5p %c:%l - %m%n
-
-
-
 #log4j.logger.org.hibernate=INFO
+
+#这是一个传统分模块的SSM项目. 学习工作流的使用(暂未完成)
